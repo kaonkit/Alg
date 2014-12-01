@@ -40,15 +40,6 @@ namespace lab3
             root = new Node<T>(val);
         }
 
-        public int height(Node<T> node)
-        {
-            Node<T> temp = node;
-            int hleft = 0, hright = 0;
-            if (node == null) return (0);
-            if (node.left != null)  hleft = height(node.left); 
-            if (node.right != null)  hright = height(node.right); 
-            return(max(hleft,hright) + 1);
-        }
 
         public Node<T> Add(T key)
         {
@@ -60,7 +51,9 @@ namespace lab3
         {
 
             if (node == null)
+            {
                 node = new Node<T>(key, parent);
+            }
             else if (key.CompareTo(node.key) < 0)
                 node.left = Add(node.left, key, node);
             else
@@ -74,7 +67,8 @@ namespace lab3
             if (node == null) return;
             if (clause == null || clause(node)){
                 count++;
-                nodes += node.key + " ";
+                if (nodes != "") nodes += " ";
+                nodes += node.key;
             }
             PreorderWalk(node.left, clause, false);
             PreorderWalk(node.right, clause, false);
@@ -88,6 +82,55 @@ namespace lab3
             if(s == "min") Depth(node.left, s, false);
             else Depth(node.right, s, false);
             return res;
+        }
+
+        public int Average() {
+            PreorderWalk(root);
+            String[] c = this.nodes.Split();
+            int i = 0, sum = 0;
+            for (; i < c.Length; i++)
+                sum += Int32.Parse(c[i]);
+            return sum / i;
+        }
+
+        public int height(Node<T> node)
+        {
+            Node<T> temp = node;
+            int hleft = 0, hright = 0;
+            if (node == null) return 0;
+            if (node.left != null)  hleft = height(node.left); 
+            if (node.right != null)  hright = height(node.right); 
+            return(max(hleft,hright) + 1);
+        }
+
+        public Node<T> Search(T target, Node<T> node, string str = null) 
+        {
+            if (node == null) return null;
+            if (target.Equals(node.key))
+            {
+                if (str == null) return node;
+                else return SearchNP(target, node, str);
+            }
+            else
+            {
+                if (target.CompareTo(node.key) < 0) return Search(target, node.left, str);
+                else return Search(target, node.right, str);
+            }
+        }
+
+        private Node<T> SearchNP(T target, Node<T> node, string str, bool rotate = false)
+        {
+            if (node == null) return null;
+            if (str == "next") {
+                if (hasOnlyRightNode(node) || !hasTwoNodes(node)) return node;
+                if (!rotate) return SearchNP(target, node.right, str, true);
+                else return SearchNP(target, node.left, str, true);
+            }
+            else{
+                if (hasOnlyLeftNode(node) || !hasTwoNodes(node)) return node;
+                if (!rotate) return SearchNP(target, node.left, str, true);
+                else return SearchNP(target, node.right, str, true);
+            }
         }
     }
 }
