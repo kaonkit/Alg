@@ -12,26 +12,26 @@ namespace lab3
         public Node<T> root{get; private set;}
         public int count {get; private set;}
         public string nodes { get; private set; }
-        public delegate bool Clause(Node<T> node);
+        public delegate bool Clause(Node<T> node, Node<T> root = null);
         
         int res = 0;
 
         #region Delegates
 
-        public Clause isLeave = node => node.left == null && node.right == null;
-        public Clause isInternalNode = node => node.left != null || node.right != null;
+        public Clause isLeave = (node, root) => node.left == null && node.right == null;
+        public Clause isInternalNode = (node, root) => node != root && (node.left != null || node.right != null);
 
-        public Clause hasOnlyLeftNode = node => node.left != null && node.right == null;
-        public Clause hasLeftNode = node => node.left != null;
+        public Clause hasOnlyLeftNode = (node, root) => node.left != null && node.right == null;
+        public Clause hasLeftNode = (node, root) => node.left != null;
 
-        public Clause hasOnlyRightNode = node => node.left == null && node.right != null;
-        public Clause hasRightNode = node => node.right != null;
+        public Clause hasOnlyRightNode = (node, root) => node.left == null && node.right != null;
+        public Clause hasRightNode = (node, root) => node.right != null;
 
-        public Clause hasTwoNodes = node => node.left != null && node.right != null;
-        public Clause hasOnlyOneNode = node => (node.left != null && node.right == null) || (node.left == null && node.right != null);
+        public Clause hasTwoNodes = (node, root) => node.left != null && node.right != null;
+        public Clause hasOnlyOneNode = (node, root) => (node.left != null && node.right == null) || (node.left == null && node.right != null);
 
-        public Clause isLeft = node => node.parent.left == node;
-        public Clause isRight = node => node.parent.right == node;
+        public Clause isLeft = (node, root) => node.parent.left == node;
+        public Clause isRight = (node, root) => node.parent.right == node;
 
 
         private delegate int Max(int node1, int node2);
@@ -68,9 +68,9 @@ namespace lab3
         {
             if (first) { count = 0; nodes = ""; }
             if (node == null) return;
-            if (clause == null || clause(node)){
+            if (clause == null || clause(node, root)){
                 count++;
-                if (nodes != "" || nodes != null) nodes += " ";
+                if (nodes != "" && nodes != null) nodes += " ";
                 nodes += node.key;
             }
             PreorderWalk(node.left, clause, false);
@@ -87,7 +87,7 @@ namespace lab3
             return res;
         }
 
-        public int Average() {
+        public double Average() {
             PreorderWalk(root);
             String[] c = this.nodes.Split();
             int i = 0, sum = 0;
@@ -164,7 +164,6 @@ namespace lab3
                 for (; temp.left != null; temp = temp.left);
             DeleteNode(nod, temp);
         }
-
         private void DeleteNode(Node<T> node, Node<T> temp)
         {
             if (isLeave(node)){

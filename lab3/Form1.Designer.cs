@@ -64,6 +64,9 @@
             this.txtDel = new System.Windows.Forms.TextBox();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.label24 = new System.Windows.Forms.Label();
+            this.txtSort = new System.Windows.Forms.TextBox();
+            this.btnSort = new System.Windows.Forms.Button();
+            this.label25 = new System.Windows.Forms.Label();
             this.tabCtrl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -382,14 +385,17 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabPage2.Controls.Add(this.label25);
             this.tabPage2.Controls.Add(this.label24);
             this.tabPage2.Controls.Add(this.label20);
             this.tabPage2.Controls.Add(this.checkSearch);
             this.tabPage2.Controls.Add(this.label21);
             this.tabPage2.Controls.Add(this.label22);
             this.tabPage2.Controls.Add(this.label23);
+            this.tabPage2.Controls.Add(this.btnSort);
             this.tabPage2.Controls.Add(this.btnDel);
             this.tabPage2.Controls.Add(this.btnSearch);
+            this.tabPage2.Controls.Add(this.txtSort);
             this.tabPage2.Controls.Add(this.txtDel);
             this.tabPage2.Controls.Add(this.txtSearch);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
@@ -507,6 +513,37 @@
             this.label24.TabIndex = 32;
             this.label24.Text = "/";
             // 
+            // txtSort
+            // 
+            this.txtSort.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSort.ForeColor = System.Drawing.Color.DarkGray;
+            this.txtSort.Location = new System.Drawing.Point(24, 244);
+            this.txtSort.Name = "txtSort";
+            this.txtSort.Size = new System.Drawing.Size(315, 22);
+            this.txtSort.TabIndex = 25;
+            this.txtSort.Text = "Введите значения...";
+            this.txtSort.Enter += new System.EventHandler(this.Enter);
+            // 
+            // btnSort
+            // 
+            this.btnSort.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSort.Location = new System.Drawing.Point(136, 274);
+            this.btnSort.Name = "btnSort";
+            this.btnSort.Size = new System.Drawing.Size(101, 23);
+            this.btnSort.TabIndex = 26;
+            this.btnSort.Text = "Сортировать";
+            this.btnSort.UseVisualStyleBackColor = true;
+            this.btnSort.Click += new System.EventHandler(this.btnSort_Click);
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(24, 298);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(12, 13);
+            this.label25.TabIndex = 32;
+            this.label25.Text = "/";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -562,6 +599,9 @@
         private System.Windows.Forms.Button btnDel;
         private System.Windows.Forms.TextBox txtDel;
         private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Button btnSort;
+        private System.Windows.Forms.TextBox txtSort;
 
     }
 }

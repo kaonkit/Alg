@@ -14,6 +14,50 @@ namespace lab3
     {
         Tree<int> binTree;
         List<Label> labels = new List<Label>();
+#region HeapSort
+        public void heapify(int[] a)
+        {
+            int temp;
+            int len = a.Length / 2;
+            for (i = len - 1; i >= 0; i--)
+                Shift(a, i, a.Length);
+
+            for (i = a.Length - 1; i >= 1; i--)
+            {
+                temp = a[0];
+                a[0] = a[i];
+                a[i] = temp;
+
+                Shift(a, 0, i);
+            }
+        }
+
+        private void Shift(int[] a, int i, int j)
+        {
+            bool done = false;
+            int maxNode;
+
+            for (; i * 2 + 1 < j && !done; )
+            {
+                if (i * 2 + 1 == j - 1)
+                    maxNode = i * 2 + 1;
+                else if (a[i * 2 + 1] > a[i * 2 + 2])
+                    maxNode = i * 2 + 1;
+                else
+                    maxNode = i * 2 + 2;
+
+                if (a[i] < a[maxNode])
+                {
+                    temp = a[i];
+                    a[i] = a[maxNode];
+                    a[maxNode] = temp;
+                    i = maxNode;
+                }
+                else
+                    done = true;
+            }
+        }
+#endregion
         public Form1(){
             InitializeComponent();
             checkTask.CheckOnClick = true;
@@ -81,25 +125,25 @@ namespace lab3
                         case 0:
                             binTree.PreorderWalk(binTree.root, binTree.isLeave);
                             label1.Visible = true;
-                            c = binTree.nodes == null ? "Узлы не найдены" : binTree.nodes;
+                            c = binTree.nodes == null || binTree.nodes == "" ? "Узлы не найдены" : binTree.nodes;
                             label1.Text = "1. " + c;
                             break;
                         case 1:
                             binTree.PreorderWalk(binTree.root, binTree.isInternalNode);
                             label2.Visible = true;
-                            c = binTree.nodes == null ? "Узлы не найдены" : binTree.nodes;
+                            c = binTree.nodes == null || binTree.nodes == "" ? "Узлы не найдены" : binTree.nodes;
                             label2.Text = "2. " + c;
                             break;
                         case 2:
                             binTree.PreorderWalk(binTree.root, binTree.hasOnlyLeftNode);
                             label3.Visible = true;
-                            c = binTree.nodes == null ? "Узлы не найдены" : binTree.nodes;
+                            c = binTree.nodes == null || binTree.nodes == "" ? "Узлы не найдены" : binTree.nodes;
                             label3.Text = "3. " + c;
                             break;
                         case 3:
                             binTree.PreorderWalk(binTree.root, binTree.hasOnlyRightNode);
                             label4.Visible = true;
-                            c = binTree.nodes == null ? "Узлы не найдены" : binTree.nodes;
+                            c = binTree.nodes == null || binTree.nodes == "" ? "Узлы не найдены" : binTree.nodes;
                             label4.Text = "4. " + c;
                             break;
                         case 4:
@@ -235,6 +279,24 @@ namespace lab3
                 MessageBox.Show("Введите значения или подтвердите ввод");
             }
         }
+
+        private void btnSort_Click(object sender, EventArgs e)
+        {
+            string [] temp = txtSort.Text.Split();
+            int[] a = new int[temp.Length];
+            for (int i = 0; i < temp.Length; i++)
+                a[i] = Int32.Parse(temp[i]);
+            heapify(a);
+            string res = "";
+            foreach (int q in a)
+                res += q + " ";
+            label25.Text = res;
+        }
+        private int i;
+        private int temp;
+
+
+        
     }
 
 }
