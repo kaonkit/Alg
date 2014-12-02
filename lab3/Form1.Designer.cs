@@ -54,13 +54,16 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.btnSearch = new System.Windows.Forms.Button();
-            this.txtSearch = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.checkSearch = new System.Windows.Forms.CheckedListBox();
+            this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
+            this.btnDel = new System.Windows.Forms.Button();
+            this.btnSearch = new System.Windows.Forms.Button();
+            this.txtDel = new System.Windows.Forms.TextBox();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
             this.tabCtrl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -137,7 +140,7 @@
             this.txtEnter.Size = new System.Drawing.Size(231, 22);
             this.txtEnter.TabIndex = 24;
             this.txtEnter.Text = "Введите значения...";
-            this.txtEnter.Enter += new System.EventHandler(this.txtEnter_Enter);
+            this.txtEnter.Enter += new System.EventHandler(this.Enter);
             // 
             // checkTask
             // 
@@ -379,40 +382,21 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabPage2.Controls.Add(this.label24);
             this.tabPage2.Controls.Add(this.label20);
             this.tabPage2.Controls.Add(this.checkSearch);
             this.tabPage2.Controls.Add(this.label21);
             this.tabPage2.Controls.Add(this.label22);
             this.tabPage2.Controls.Add(this.label23);
+            this.tabPage2.Controls.Add(this.btnDel);
             this.tabPage2.Controls.Add(this.btnSearch);
+            this.tabPage2.Controls.Add(this.txtDel);
             this.tabPage2.Controls.Add(this.txtSearch);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Size = new System.Drawing.Size(674, 392);
             this.tabPage2.TabIndex = 0;
             this.tabPage2.Text = "tabPage2";
-            // 
-            // btnSearch
-            // 
-            this.btnSearch.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSearch.Location = new System.Drawing.Point(238, 20);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(101, 23);
-            this.btnSearch.TabIndex = 26;
-            this.btnSearch.Text = "Ввести";
-            this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-            // 
-            // txtSearch
-            // 
-            this.txtSearch.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSearch.ForeColor = System.Drawing.Color.DarkGray;
-            this.txtSearch.Location = new System.Drawing.Point(24, 20);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(157, 22);
-            this.txtSearch.TabIndex = 25;
-            this.txtSearch.Text = "Введите значения...";
-            this.txtSearch.Enter += new System.EventHandler(this.txtSearch_Enter);
             // 
             // label20
             // 
@@ -437,6 +421,17 @@
             this.checkSearch.Size = new System.Drawing.Size(315, 52);
             this.checkSearch.TabIndex = 31;
             // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(349, 108);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(19, 14);
+            this.label21.TabIndex = 29;
+            this.label21.Text = "0.";
+            this.label21.Visible = false;
+            // 
             // label22
             // 
             this.label22.AutoSize = true;
@@ -459,16 +454,58 @@
             this.label23.Text = "18.";
             this.label23.Visible = false;
             // 
-            // label21
+            // btnDel
             // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.Location = new System.Drawing.Point(349, 108);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(19, 14);
-            this.label21.TabIndex = 29;
-            this.label21.Text = "0.";
-            this.label21.Visible = false;
+            this.btnDel.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDel.Location = new System.Drawing.Point(238, 163);
+            this.btnDel.Name = "btnDel";
+            this.btnDel.Size = new System.Drawing.Size(101, 23);
+            this.btnDel.TabIndex = 26;
+            this.btnDel.Text = "Удалить";
+            this.btnDel.UseVisualStyleBackColor = true;
+            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSearch.Location = new System.Drawing.Point(238, 20);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(101, 23);
+            this.btnSearch.TabIndex = 26;
+            this.btnSearch.Text = "Найти";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // txtDel
+            // 
+            this.txtDel.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDel.ForeColor = System.Drawing.Color.DarkGray;
+            this.txtDel.Location = new System.Drawing.Point(24, 165);
+            this.txtDel.Name = "txtDel";
+            this.txtDel.Size = new System.Drawing.Size(157, 22);
+            this.txtDel.TabIndex = 25;
+            this.txtDel.Text = "Введите значения...";
+            this.txtDel.Enter += new System.EventHandler(this.Enter);
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSearch.ForeColor = System.Drawing.Color.DarkGray;
+            this.txtSearch.Location = new System.Drawing.Point(24, 20);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(157, 22);
+            this.txtSearch.TabIndex = 25;
+            this.txtSearch.Text = "Введите значения...";
+            this.txtSearch.Enter += new System.EventHandler(this.Enter);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(24, 194);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(12, 13);
+            this.label24.TabIndex = 32;
+            this.label24.Text = "/";
             // 
             // Form1
             // 
@@ -522,6 +559,9 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Button btnDel;
+        private System.Windows.Forms.TextBox txtDel;
+        private System.Windows.Forms.Label label24;
 
     }
 }

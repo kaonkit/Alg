@@ -28,7 +28,10 @@ namespace lab3
         public Clause hasRightNode = node => node.right != null;
 
         public Clause hasTwoNodes = node => node.left != null && node.right != null;
-        public Clause hasOneNode = node => (node.left != null && node.right == null) || (node.left == null && node.right != null);
+        public Clause hasOnlyOneNode = node => (node.left != null && node.right == null) || (node.left == null && node.right != null);
+
+        public Clause isLeft = node => node.parent.left == node;
+        public Clause isRight = node => node.parent.right == node;
 
 
         private delegate int Max(int node1, int node2);
@@ -67,12 +70,12 @@ namespace lab3
             if (node == null) return;
             if (clause == null || clause(node)){
                 count++;
-                if (nodes != "") nodes += " ";
+                if (nodes != "" || nodes != null) nodes += " ";
                 nodes += node.key;
             }
             PreorderWalk(node.left, clause, false);
             PreorderWalk(node.right, clause, false);
-            if (nodes == "") nodes = "-";
+            
         }
         
         public int Depth(Node<T> node, string s, bool first = true) {
@@ -103,12 +106,13 @@ namespace lab3
             return(max(hleft,hright) + 1);
         }
 
-        public Node<T> Search(T target, Node<T> node, string str = null) 
+        public Node<T> Search(T target, Node<T> node,  string str = null) 
         {
             if (node == null) return null;
             if (target.Equals(node.key))
             {
                 if (str == null) return node;
+                else if (isLeave(node) || (str == "previous" && hasOnlyRightNode(node)) || (str == "next" && hasOnlyLeftNode(node))) return SearchIfNull(node, str);
                 else return SearchNP(target, node, str);
             }
             else
@@ -122,15 +126,60 @@ namespace lab3
         {
             if (node == null) return null;
             if (str == "next") {
-                if (hasOnlyRightNode(node) || !hasTwoNodes(node)) return node;
+                if (!hasLeftNode(node) && node.key.CompareTo(target) > 0) return node;
                 if (!rotate) return SearchNP(target, node.right, str, true);
                 else return SearchNP(target, node.left, str, true);
             }
-            else{
-                if (hasOnlyLeftNode(node) || !hasTwoNodes(node)) return node;
+            else {
+                if (!hasRightNode(node)&& node.key.CompareTo(target) < 0) return node;
                 if (!rotate) return SearchNP(target, node.left, str, true);
                 else return SearchNP(target, node.right, str, true);
             }
+        }
+        private Node<T> SearchIfNull(Node<T> node, string str) {
+            if (str == "next"){
+                if (node.parent == null) return null;
+                if (node.parent.key.CompareTo(node.key) > 0) return node.parent;
+                else return SearchIfNull(node.parent, str);
+            }
+            else {
+                if (node.parent == null) return null;
+                if (node.parent.key.CompareTo(node.key) < 0) return node.parent;
+                else return SearchIfNull(node.parent, str);
+            }
+        }
+
+        public void Delete(T node){
+            Node<T> nod = Search(node, root);
+            if (nod == root && hasOnlyLeftNode(nod)) { 
+                root = nod.left; 
+                return; 
+            }
+            if (nod == root && hasOnlyRightNode(nod)) { 
+                root = nod.right; 
+                return; 
+            }
+            Node<T> temp = Search(node, root).right;
+            if (temp != null) 
+                for (; temp.left != null; temp = temp.left);
+            DeleteNode(nod, temp);
+        }
+
+        private void DeleteNode(Node<T> node, Node<T> temp)
+        {
+            if (isLeave(node)){
+                if (isLeft(node)) node.parent.left = null;
+                else node.parent.right = null;
+            }
+            else {
+                DeleteNode(Search(temp.key, root), temp);
+                if (node.Equals(root)) root = temp;
+                else if (isLeft(node)) node.parent.left = temp;
+                else node.parent.right = temp;
+                temp.left = node.left;
+                temp.right = node.right;
+            }
+
         }
     }
 }
