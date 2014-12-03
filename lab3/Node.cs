@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace lab3
 {
-    class Node<T> where T : IComparable
+    public class Node<T> where T : IComparable
     {
-        public T key;
-        public Node<T> left;
-        public Node<T> right;
-        public Node<T> parent;
+        public T key { get; set; }
+        public Node<T> left { get; set; }
+        public Node<T> right { get; set; }
+        public Node<T> parent { get; set; }
         public Node(T val, Node<T> par = null)
         {
             key = val;

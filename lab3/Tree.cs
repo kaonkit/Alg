@@ -7,16 +7,17 @@ using System.Threading.Tasks;
 namespace lab3
 {
 
-    class Tree<T> where T : IComparable
+    public class Tree<T> where T : IComparable
     {
-        public Node<T> root{get; private set;}
+        public Node<T> root{get; set;}
         public int count {get; private set;}
         public string nodes { get; private set; }
-        public delegate bool Clause(Node<T> node, Node<T> root = null);
+        
         
         int res = 0;
 
-        #region Delegates
+#region Delegates
+        public delegate bool Clause(Node<T> node, Node<T> root = null);
 
         public Clause isLeave = (node, root) => node.left == null && node.right == null;
         public Clause isInternalNode = (node, root) => node != root && (node.left != null || node.right != null);
@@ -34,15 +35,14 @@ namespace lab3
         public Clause isRight = (node, root) => node.parent.right == node;
 
 
-        private delegate int Max(int node1, int node2);
-        private Max max = (node1, node2) => node1 > node2 ? node1 : node2;
+        public delegate int Max(int node1, int node2);
+        public Max max = (node1, node2) => node1 > node2 ? node1 : node2;
 
-        #endregion
-
+#endregion
+        public Tree() { }
         public Tree(T val) {
             root = new Node<T>(val);
         }
-
 
         public Node<T> Add(T key)
         {
@@ -52,11 +52,8 @@ namespace lab3
         }
         private Node<T> Add(Node<T> node, T key, Node<T> parent = null)
         {
-
             if (node == null)
-            {
                 node = new Node<T>(key, parent);
-            }
             else if (key.CompareTo(node.key) < 0)
                 node.left = Add(node.left, key, node);
             else
@@ -121,7 +118,6 @@ namespace lab3
                 else return Search(target, node.right, str);
             }
         }
-
         private Node<T> SearchNP(T target, Node<T> node, string str, bool rotate = false)
         {
             if (node == null) return null;
